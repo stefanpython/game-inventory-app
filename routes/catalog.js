@@ -7,9 +7,7 @@ const product_controller = require("../controllers/productsController");
 /// PRODUCT ROUTES ///
 
 // Get catalog home page
-router.get("/", (req, res, next) => {
-  res.send("IMPLEMENT INDEX");
-});
+router.get("/", product_controller.index);
 
 // Get request for creating a Product.
 router.get("/product/create", (req, res, next) => {
@@ -92,3 +90,5 @@ router.get("/category/:id", (req, res, next) => {
 router.get("/categories", (req, res, next) => {
   res.send("IMPLEMENT GET ALL CATEGORIES");
 });
+
+module.exports = router;
