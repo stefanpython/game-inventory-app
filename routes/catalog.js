@@ -45,9 +45,7 @@ router.get("/product/:id", (req, res, next) => {
 });
 
 // GET request for list of all products
-router.get("/products", (req, res, next) => {
-  res.send("IMPLEMENT GET ALL PRODUCT");
-});
+router.get("/products", product_controller.product_list);
 
 /// CATEGORY ROUTES ///
 

@@ -17,3 +17,12 @@ exports.index = asyncHandler(async (req, res, next) => {
     url: req.url,
   });
 });
+
+exports.product_list = asyncHandler(async (req, res, next) => {
+  const allProducts = await Product.find({}).exec();
+
+  res.render("product_list", {
+    title: "Games List",
+    product_list: allProducts,
+  });
+});
