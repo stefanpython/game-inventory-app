@@ -8,10 +8,14 @@ const mongoose = require("mongoose");
 const expressLayouts = require("express-ejs-layouts");
 mongoose.set("strictQuery", false);
 const mongodb =
-  "mongodb+srv://dementia1349:test@cluster0.zw0djkv.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://dementia1349:test@cluster0.zw0djkv.mongodb.net/game_inventory?retryWrites=true&w=majority";
 
 async function main() {
-  await mongoose.connect(mongodb);
+  await mongoose.connect(mongodb, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+
   console.log("Connected to MongoDB Atlas!");
 }
 main().catch((err) => console.log(err));
