@@ -40,9 +40,7 @@ router.post("/product/:id/update", (req, res, next) => {
 });
 
 // GET request for one product
-router.get("/product/:id", (req, res, next) => {
-  res.send("IMPLEMENT GET ONE PRODUCT");
-});
+router.get("/product/:id", product_controller.product_detail);
 
 // GET request for list of all products
 router.get("/products", product_controller.product_list);
