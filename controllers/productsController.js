@@ -68,3 +68,67 @@ exports.product_create_get = asyncHandler(async (req, res, next) => {
     category: allCategories,
   });
 });
+
+// Handle product create on POST
+exports.product_create_post = [
+  // Convert the category to an array.
+  (req, res, next) => {
+    if (!(req.body.category instanceof Array)) {
+      if (typeof req.body.category === "undefined") req.body.category = [];
+      else req.body.category = new Array(req.body.category);
+    }
+    next();
+  },
+
+  // Validate and sanitize fields
+  body("name", "Name must not be empty").trim().isLength({ min: 1 }).escape(),
+  body("description", "Description must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("category.*").escape(),
+  body("price", "Price must not be 0").trim().isLength({ min: 1 }).escape(),
+  body("number_of_items", "Number of items must not be 0")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  // Process request after validation and sanitization.
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    const product = new Product({
+      name: req.body.name,
+      description: req.body.description,
+      category: req.body.category,
+      price: req.body.price,
+      number_of_items: req.body.number_of_items,
+    });
+
+    if (!errors.isEmpty()) {
+      const [allProducts, allCategories] = await Promise.all([
+        Product.find().exec(),
+        Category.find().populate("name").exec(),
+      ]);
+
+      // Mark our selected genres as checked.
+      for (const category of allCategories) {
+        if (product.category.indexOf(category._id) > -1) {
+          category.checked = "true";
+        }
+      }
+
+      res.render("product_form", {
+        title: "Create Product",
+        products: allProducts,
+        cateogies: allCategories,
+        product: product,
+        errors: errors.array(),
+      });
+    } else {
+      await product.save();
+      res.redirect(product.url);
+    }
+  }),
+];

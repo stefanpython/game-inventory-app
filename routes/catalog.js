@@ -9,14 +9,11 @@ const product_controller = require("../controllers/productsController");
 // Get catalog home page
 router.get("/", product_controller.index);
 
-// Get request for creating a Product.
+// GET request for creating a Product.
 router.get("/product/create", product_controller.product_create_get);
 
 // POST request for creating product
-router.post("/product/create", (req, res, next) => {
-  res.send("IMPLEMENT CREATE POST PRODUCT");
-});
-
+router.post("/product/create", product_controller.product_create_post);
 // GET request to delete product
 router.get("/product/:id/delete", (req, res, next) => {
   res.send("IMPLEMENT GET DELETE PRODUCT");
