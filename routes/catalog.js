@@ -14,15 +14,12 @@ router.get("/product/create", product_controller.product_create_get);
 
 // POST request for creating product
 router.post("/product/create", product_controller.product_create_post);
+
 // GET request to delete product
-router.get("/product/:id/delete", (req, res, next) => {
-  res.send("IMPLEMENT GET DELETE PRODUCT");
-});
+router.get("/product/:id/delete", product_controller.product_delete_get);
 
 // POST request to delete product
-router.post("/product/:id/delete", (req, res, next) => {
-  res.send("IMPLEMENT POST DELETE PRODUCT");
-});
+router.post("/product/:id/delete", product_controller.product_delete_post);
 
 // GET request to update product
 router.get("/product/:id/update", (req, res, next) => {

@@ -1,0 +1,13 @@
+<div class="container">
+    <h1><%= title %></h1>
+    <p>Are you sure you want to delete this product?</p>
+    <p>Name: <%= product.name %></p>
+    <p>Description: <%= product.description %></p>
+    <p>Category: <%= product.category.name %></p>
+    <p>Price: <%= product.price %></p>
+    <p>Number of items: <%= product.number_of_items %></p>
+    <form method="POST" action="">
+      <input type="submit" value="Delete" class="btn btn-danger" >
+      <a href="/catalog/product/<%= product._id %>" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>

@@ -132,3 +132,34 @@ exports.product_create_post = [
     }
   }),
 ];
+
+// Display delete product form on GET
+exports.product_delete_get = asyncHandler(async (req, res, next) => {
+  // Get details of all products
+  const product = await Product.findById(req.params.id)
+    .populate("name")
+    .populate("category")
+    .exec();
+
+  if (product === null) {
+    res.redirect("/catalog/products");
+  }
+
+  res.render("product_delete", {
+    title: "Delete Game",
+    product: product,
+  });
+});
+
+// Handle delete product on POST
+exports.product_delete_post = asyncHandler(async (req, res, next) => {
+  const product = await Product.findById(req.params.id)
+  .exec();
+
+  if (product === null) {
+    res.redirect("/catalog/products");
+  } else {
+    await Product.findByIdAndRemove(req.params.id);
+    res.redirect("/catalog/products");
+  }
+});
