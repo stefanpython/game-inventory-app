@@ -18,6 +18,7 @@ exports.index = asyncHandler(async (req, res, next) => {
   });
 });
 
+// Display list of all products.
 exports.product_list = asyncHandler(async (req, res, next) => {
   const allProducts = await Product.find({}).exec();
 
@@ -27,11 +28,13 @@ exports.product_list = asyncHandler(async (req, res, next) => {
   });
 });
 
+// Get all categories
 async function getCategoryById(categoryId) {
   const category = await Category.findById(categoryId).exec();
   return category ? category.name : "All";
 }
 
+// Display detail page for a specific product.
 exports.product_detail = asyncHandler(async (req, res, next) => {
   const product = await Product.findById(req.params.id)
     .populate("category")
@@ -49,5 +52,19 @@ exports.product_detail = asyncHandler(async (req, res, next) => {
     name: product.name,
     product: product,
     categoryName: categoryName,
+  });
+});
+
+// Display product create form on GET
+exports.product_create_get = asyncHandler(async (req, res, next) => {
+  let product = new Product();
+
+  const allProducts = await Product.find().exec();
+  const allCategories = await Category.find().populate("name").exec();
+
+  res.render("product_form", {
+    title: "Create Product",
+    products: allProducts,
+    category: allCategories,
   });
 });

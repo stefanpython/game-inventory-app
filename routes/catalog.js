@@ -10,9 +10,7 @@ const product_controller = require("../controllers/productsController");
 router.get("/", product_controller.index);
 
 // Get request for creating a Product.
-router.get("/product/create", (req, res, next) => {
-  res.send("IMPLEMENT CREATE GET PRODUCT");
-});
+router.get("/product/create", product_controller.product_create_get);
 
 // POST request for creating product
 router.post("/product/create", (req, res, next) => {
