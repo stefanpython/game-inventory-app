@@ -66,6 +66,8 @@ exports.product_create_get = asyncHandler(async (req, res, next) => {
     title: "Create Product",
     products: allProducts,
     category: allCategories,
+    categories: allCategories,
+    product: product,
   });
 });
 
@@ -153,8 +155,7 @@ exports.product_delete_get = asyncHandler(async (req, res, next) => {
 
 // Handle delete product on POST
 exports.product_delete_post = asyncHandler(async (req, res, next) => {
-  const product = await Product.findById(req.params.id)
-  .exec();
+  const product = await Product.findById(req.params.id).exec();
 
   if (product === null) {
     res.redirect("/catalog/products");
@@ -163,3 +164,116 @@ exports.product_delete_post = asyncHandler(async (req, res, next) => {
     res.redirect("/catalog/products");
   }
 });
+
+// Display product update from GET
+exports.product_update_get = asyncHandler(async (req, res, next) => {
+  // Get product, categories, and existing products
+  const [product, allCategories, existingProducts] = await Promise.all([
+    Product.findById(req.params.id).populate("category").exec(),
+    Category.find().exec(),
+    Product.find().exec(),
+  ]);
+
+  if (product === null) {
+    // No results
+    const err = new Error("Game not found");
+    err.status(400);
+    return next(err);
+  }
+
+  // Mark our selected categories as checked.
+  for (const category of allCategories) {
+    for (const product_g of product.category) {
+      if (category._id.toString() === product_g._id.toString()) {
+        category.selected = "true";
+      }
+    }
+  }
+
+  res.render("product_form", {
+    title: "Update Game",
+    product: product,
+    categories: allCategories,
+    products: existingProducts,
+  });
+});
+
+// Handle product update on POST
+exports.product_update_post = [
+  // COnvert the category to an Array
+  (req, res, next) => {
+    if (!(req.body.category instanceof Array)) {
+      if (typeof req.body.category === "undefined") {
+        req.body.category = [];
+      } else {
+        req.body.category = new Array(req.body.category);
+      }
+    }
+    next();
+  },
+
+  // Validate and sanitize fields
+  body("name", "Name must not be empty").trim().isLength({ min: 1 }).escape(),
+  body("description", "Description must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("category.*").escape(),
+  body("price", "Price must not be 0").trim().isLength({ min: 1 }).escape(),
+  body("number_of_items", "Number of items must not be 0")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  // Process request after validation and sanitization.
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    // Create a Product object with escaped/trimmed data and old id.
+    const product = new Product({
+      name: req.body.name,
+      description: req.body.description,
+      category:
+        typeof req.body.category === "undefined" ? [] : req.body.category,
+      price: req.body.price,
+      number_of_items: req.body.number_of_items,
+      _id: req.params.id, // This is required, or a new ID will be assigned!
+    });
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render form again with sanitized values/error messages.
+
+      // Get all products and categories for form
+      const [allProducts, allCategories] = await Promise.all([
+        Product.find().exec(),
+        Category.find().exec(),
+      ]);
+
+      // Mark our selected categories as selected
+      for (const category of allCategories) {
+        if (product.category.indexOf(category._id) > 1) {
+          category.selected = "true";
+        }
+      }
+
+      res.render("product_form", {
+        title: "Update product",
+        products: allProducts,
+        category: allCategories,
+        product: product,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // Data from form is valid. Update the record.
+      const theproduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        product,
+        {}
+      );
+      // Redirect to product detail page.
+      res.redirect(theproduct.url);
+    }
+  }),
+];

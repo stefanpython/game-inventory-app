@@ -22,14 +22,10 @@ router.get("/product/:id/delete", product_controller.product_delete_get);
 router.post("/product/:id/delete", product_controller.product_delete_post);
 
 // GET request to update product
-router.get("/product/:id/update", (req, res, next) => {
-  res.send("IMPLEMENT GET UPDATE PRODUCT");
-});
+router.get("/product/:id/update", product_controller.product_update_get);
 
 // POST request to update product
-router.post("/product/:id/update", (req, res, next) => {
-  res.send("IMPLEMENT GET UPDATE PRODUCT");
-});
+router.post("/product/:id/update", product_controller.product_update_post);
 
 // GET request for one product
 router.get("/product/:id", product_controller.product_detail);
