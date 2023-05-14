@@ -71,8 +71,6 @@ router.get("/category/:id", (req, res, next) => {
 });
 
 // GET request for list of all categories
-router.get("/categories", (req, res, next) => {
-  res.send("IMPLEMENT GET ALL CATEGORIES");
-});
+router.get("/categories", category_controller.category_list);
 
 module.exports = router;
