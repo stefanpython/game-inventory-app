@@ -20,7 +20,7 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // Display list of all products.
 exports.product_list = asyncHandler(async (req, res, next) => {
-  const allProducts = await Product.find({}).exec();
+  const allProducts = await Product.find({}).sort("name").exec();
 
   res.render("product_list", {
     title: "Games List",
