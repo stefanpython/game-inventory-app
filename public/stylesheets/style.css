@@ -1,5 +1,6 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height: 100%;
 }
 
 a {
@@ -45,4 +46,25 @@ li {
   color: #666;
   font-size: 14px;
   line-height: 1.3;
+}
+
+/* Set footer styles */
+footer {
+  background-color: #333333;
+  padding: 25px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  height: 20px;
+}
+
+footer img {
+  height: 30px;
+  border-radius: 10em;
+}
+
+footer p {
+  font-size: 1.2rem;
+  color: white;
 }
