@@ -1,0 +1,24 @@
+<h1>Category: <%= category.name %></h1>
+
+<div style="margin-left: 20px; margin-top: 20px;">
+  <h4>Products</h4>
+
+  <dl>
+    <% if (category_products.length > 0) { %>
+      <% category_products.forEach((product) => { %>
+        <dt><a href="<%= product.url %>"><%= product.name %></a></dt>
+        <dd><%= product.description %></dd>
+      <% }); %>
+    <% } else { %>
+      <p>This category has no products</p>
+    <% } %>
+  </dl>
+</div>
+
+<hr>
+<p>
+  <a href="<%= category.url %>/delete">Delete category</a>
+</p>
+<p>
+  <a href="<%= category.url %>/update">Update category</a>
+</p>

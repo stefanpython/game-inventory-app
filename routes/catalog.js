@@ -66,9 +66,7 @@ router.post("/category/:id/update", (req, res, next) => {
 });
 
 // GET request for one category
-router.get("/category/:id", (req, res, next) => {
-  res.send("IMPLEMENT GET ONE CATEGORY");
-});
+router.get("/category/:id", category_controller.category_detail);
 
 // GET request for list of all categories
 router.get("/categories", category_controller.category_list);
