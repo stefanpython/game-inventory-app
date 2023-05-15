@@ -15,4 +15,10 @@ ProductSchema.virtual("url").get(function () {
   return `/catalog/product/${this._id}`;
 });
 
+// Populate name and description fields when querying products
+ProductSchema.pre("find", function (next) {
+  this.populate("name").populate("description");
+  next();
+});
+
 module.exports = mongoose.model("Product", ProductSchema);

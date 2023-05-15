@@ -1,0 +1,26 @@
+<h1>Delete Category: <%= category.name %></h1>
+
+<% if (category_products.length > 0) { %>
+  <p><strong>Delete the following products before attempting to delete this category.</strong></p>
+  <div style="margin-left: 20px; margin-top: 20px;">
+    <h4>Products</h4>
+    <hr>
+    <ul>
+      <% category_products.forEach(function(product) { %>
+        <li>
+          <a href="<%= product.url %>"><h3><%= product.name %></h3> </a>- <%= product.description %>
+        </li>
+        <hr>
+      <% }); %>
+    </ul>
+  </div>
+<% } else { %>
+  <p>Do you really want to delete this Category?</p>
+  <form method="POST" action="">
+    <div class="form-group">
+      <input id="id" class="form-control" type="hidden" name="id" required="true" value="<%= category._id %>">
+    </div>
+    <button class="btn btn-primary" type="submit">Delete</button>
+    <a href="/catalog/category/<%= category._id %>" class="btn btn-secondary">Cancel</a>
+  </form>
+<% } %>

@@ -89,3 +89,45 @@ exports.category_create_post = [
     }
   }),
 ];
+
+// Display category delete form on GET
+exports.category_delete_get = asyncHandler(async (req, res, next) => {
+  // Get details of category and all their products (in parallel)
+  const [category, allProductsInCategory] = await Promise.all([
+    Category.findById(req.params.id).exec(),
+    Product.find({ category: req.params.id }, "name, description").exec(),
+  ]);
+
+  if (category === null) {
+    // No results
+    req.redirect("/catalog/categories");
+  }
+
+  res.render("category_delete", {
+    title: "Delete Category",
+    category: category,
+    category_products: allProductsInCategory,
+  });
+});
+
+// Handle Category delete on POST
+exports.category_delete_post = asyncHandler(async (req, res, next) => {
+  // Get details of category and all their products (in parallel)
+  const [category, productsInCategory] = await Promise.all([
+    Category.findById(req.params.id).exec(),
+    Product.find({ category: req.params.id }).exec(),
+  ]);
+
+  if (productsInCategory.length > 0) {
+    res.render("category_delete", {
+      title: "Delete Category",
+      category: category,
+      category_products: productsInCategory,
+    });
+    return;
+  } else {
+    // Category has no products. Delete object and redirect to the list of categories.
+    await Category.findByIdAndRemove(req.body.id);
+    res.redirect("/catalog/categories");
+  }
+});
