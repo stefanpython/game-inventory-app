@@ -6,6 +6,10 @@ const product_controller = require("../controllers/productsController");
 
 /// PRODUCT ROUTES ///
 
+router.get("/about", (req, res) => {
+  res.render("about");
+});
+
 // Get catalog home page
 router.get("/", product_controller.index);
 

@@ -13,3 +13,36 @@ a {
 li {
   list-style-type: none;
 }
+
+/* public/stylesheets/about.css */
+
+.about-content {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+h1 {
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+p {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+li {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.3;
+}
