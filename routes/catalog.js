@@ -36,14 +36,10 @@ router.get("/products", product_controller.product_list);
 /// CATEGORY ROUTES ///
 
 // Get request for creating a category.
-router.get("/category/create", (req, res, next) => {
-  res.send("IMPLEMENT CREATE GET CATEGORY");
-});
+router.get("/category/create", category_controller.category_create_get);
 
 // POST request for creating category
-router.post("/category/create", (req, res, next) => {
-  res.send("IMPLEMENT CREATE POST CATEGORY");
-});
+router.post("/category/create", category_controller.category_create_post);
 
 // GET request to delete category
 router.get("/category/:id/delete", (req, res, next) => {
