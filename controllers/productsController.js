@@ -2,7 +2,7 @@ const Product = require("../models/product");
 const Category = require("../models/category");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
-const multer = require("multer");
+const multer = require("multer"); // For uploading images
 
 /// ADD IMAGES ///
 
