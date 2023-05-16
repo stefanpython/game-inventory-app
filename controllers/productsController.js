@@ -2,6 +2,22 @@ const Product = require("../models/product");
 const Category = require("../models/category");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
+const multer = require("multer");
+
+/// ADD IMAGES ///
+
+// Set up multer storage and file name
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/images/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+// Create multer upload instance
+const upload = multer({ storage: storage });
 
 exports.index = asyncHandler(async (req, res, next) => {
   // Get details of products and category counts (in parallel)
@@ -11,7 +27,7 @@ exports.index = asyncHandler(async (req, res, next) => {
   ]);
 
   res.render("index", {
-    title: "Game Base Home",
+    title: "Game Base Inventory",
     product_count: numProducts,
     category_count: numCategories,
     url: req.url,
@@ -73,6 +89,9 @@ exports.product_create_get = asyncHandler(async (req, res, next) => {
 
 // Handle product create on POST
 exports.product_create_post = [
+  // Handle single file upload with field name "image"
+  upload.single("image"),
+
   // Convert the category to an array.
   (req, res, next) => {
     if (!(req.body.category instanceof Array)) {
@@ -106,6 +125,7 @@ exports.product_create_post = [
       category: req.body.category,
       price: req.body.price,
       number_of_items: req.body.number_of_items,
+      image: req.file ? req.file.filename : null,
     });
 
     if (!errors.isEmpty()) {
@@ -190,7 +210,7 @@ exports.product_update_get = asyncHandler(async (req, res, next) => {
     }
   }
 
-  res.render("product_form", {
+  res.render("product_form_update", {
     title: "Update Game",
     product: product,
     categories: allCategories,
@@ -244,6 +264,7 @@ exports.product_update_post = [
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/error messages.
 
+      console.log(errors);
       // Get all products and categories for form
       const [allProducts, allCategories] = await Promise.all([
         Product.find().exec(),
@@ -252,15 +273,15 @@ exports.product_update_post = [
 
       // Mark our selected categories as selected
       for (const category of allCategories) {
-        if (product.category.indexOf(category._id) > 1) {
+        if (product.category.indexOf(category._id) > -1) {
           category.selected = "true";
         }
       }
 
-      res.render("product_form", {
-        title: "Update product",
+      res.render("product_form_update", {
+        title: "Update Game",
         products: allProducts,
-        category: allCategories,
+        categories: allCategories,
         product: product,
         errors: errors.array(),
       });
@@ -272,6 +293,7 @@ exports.product_update_post = [
         product,
         {}
       );
+      console.log("Updated product:", theproduct);
       // Redirect to product detail page.
       res.redirect(theproduct.url);
     }

@@ -8,6 +8,7 @@ const ProductSchema = new Schema({
   category: [{ type: Schema.Types.ObjectId, ref: "Category" }],
   price: Number,
   number_of_items: Number,
+  image: { type: String }, // Add the image field
 });
 
 // Virtual for product`s URL

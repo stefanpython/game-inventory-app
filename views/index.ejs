@@ -1,14 +1,15 @@
-<div class="indexDiv">
-  <h1><%= title %></h1>
+<div class="container">
+  <div class="indexDiv">
+    <h1 class="display-4"><%= title %></h1>
 
-<p>Welcome to <em>GameBaseInventory</em>, the place where you find and store all of your new favorite games</p>
+    <p class="lead">Welcome to <em>GameBaseInventory</em>, the place where you find and store all of your new favorite games.</p>
 
-<h3>Database contains the following:</h3>
+    <h3>Database contains the following:</h3>
 
-<ul>
-  <li><strong>Games:</strong>&nbsp;<%= product_count %></li>
-  <li><strong>Categories:</strong>&nbsp;<%= category_count %></li>
-  <li><strong>Url path on site:</strong> &nbsp;<strong><%= url %></strong></li>
-</ul>
-
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Games:</strong> <%= product_count %></li>
+      <li class="list-group-item"><strong>Categories:</strong> <%= category_count %></li>
+      <li class="list-group-item"><strong>URL path on site:</strong> <strong><%= url %>home</strong></li>
+    </ul>
+  </div>
 </div>

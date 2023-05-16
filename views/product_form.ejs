@@ -1,16 +1,24 @@
 <!-- product_form.ejs -->
 
 <h1><%= title %></h1>
+<hr>
 
-<form action="" method="POST" class="mb-5">
+<form action="" enctype="multipart/form-data" method="POST" class="mb-5">
   <div class="form-group">
     <label for="name">Name:</label>
     <input type="text" name="name" required class="form-control" value="<%= (product && product.name) ? product.name : "" %>">
   </div>
+
   <div class="form-group">
     <label for="description">Description:</label>
     <textarea name="description" rows="3" class="form-control"><%= (product && product.description) ? product.description : '' %></textarea>
   </div>
+
+  <div class="form-group">
+    <label for="image">Image:</label>
+    <input type="file" class="form-control-file" id="image" name="image">
+  </div>
+
   <div class="form-group">
     <label for="category">Category:</label>
     <select name="category" required class="form-control">
@@ -24,6 +32,7 @@
     <label for="price">Price:</label>
     <input type="number" name="price" min="0" step="0.01" class="form-control"  value="<%= (product && product.price) ? product.price : "" %>">
   </div>
+
   <div class="form-group">
     <label for="number_of_items">Number of Items:</label>
     <input type="number" name="number_of_items" min="0" class="form-control"  value="<%= (product && product.number_of_items) ? product.number_of_items : "" %>">

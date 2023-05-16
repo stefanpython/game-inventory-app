@@ -68,3 +68,36 @@ footer p {
   font-size: 1.2rem;
   color: white;
 }
+
+.list-image {
+  height: 50px;
+  border-radius: 10px;
+}
+
+.list-image:hover {
+  transform: scale(1.2);
+  transition: 0.7s;
+}
+
+.detail-image {
+  height: 200px;
+  border-radius: 5px;
+}
+
+.nav-logo {
+  height: 50px;
+  border-radius: 5em;
+}
+
+.nav-link {
+  font-size: 17px;
+  margin-top: -8px;
+}
+
+.game-list {
+  display: grid;
+}
+
+.game-list a {
+  font-size: 17px;
+}

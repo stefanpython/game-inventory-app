@@ -1,10 +1,11 @@
 <h1><%= title %></h1>
-
+<hr>
   <ul>
     <% if (product_list.length > 0) { %>
       <% product_list.forEach(function(product) { %>
-        <li>
+        <li class="game-list">
           <a href="<%= product.url %>"><%= product.name %></a> 
+          <a href="<%= product.url %>"><img class="list-image" src="/images/<%= product.image %>" alt="Product Image" /></a>
         </li>
         <hr>
       <% }); %>
