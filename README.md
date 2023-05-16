@@ -7,4 +7,4 @@ Made as part of The Odin Project curriculum implementing all CRUD operations.
 * Express
 * MongoDb Atlas
 
-# Live demo (HERE)[https://game-inventory.up.railway.app/catalog]
+# Live demo [HERE](https://game-inventory.up.railway.app/catalog)
