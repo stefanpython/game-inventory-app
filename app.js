@@ -3,21 +3,23 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-
 const mongoose = require("mongoose");
 const expressLayouts = require("express-ejs-layouts");
+require("dotenv").config();
+
 mongoose.set("strictQuery", false);
-const mongodb =
-  "mongodb+srv://dementia1349:test@cluster0.zw0djkv.mongodb.net/game_inventory?retryWrites=true&w=majority";
 
 async function main() {
-  await mongoose.connect(mongodb, {
+  const mongodbUri = process.env.MONGODB_URI;
+
+  await mongoose.connect(mongodbUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 
   console.log("Connected to MongoDB Atlas!");
 }
+
 main().catch((err) => console.log(err));
 
 var indexRouter = require("./routes/index");
