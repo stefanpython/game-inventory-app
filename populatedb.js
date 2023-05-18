@@ -12,8 +12,7 @@ const categories = [];
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false); // Prepare for Mongoose 7
 
-const mongoDB =
-  "mongodb+srv://dementia1349:test@cluster0.zw0djkv.mongodb.net/game_inventory?retryWrites=true&w=majority";
+const mongoDB = process.env.MONGODB_URI;
 
 main().catch((err) => console.log(err));
 
