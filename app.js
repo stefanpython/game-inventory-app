@@ -17,7 +17,7 @@ async function main() {
     useUnifiedTopology: true,
   });
 
-  console.log("Connected to MongoDB Atlas!");
+  console.log("Connected to MongoDB Atlass!");
 }
 
 main().catch((err) => console.log(err));
